@@ -29,6 +29,17 @@ const Header = () => {
   const { balance, buyTokens, getBalance, logout, user } =
     useContext(AmazonContext);
   const { openModal, isModalOpen, closeModal } = useModal();
+
+  let message = "";
+
+  if (user.attributes.selectRole === "Producer") {
+    message = (
+      <Link href="/addAssets">
+        <div className={styles.menuItem}>Add Assets</div>
+      </Link>
+    );
+  }
+
   return (
     <ModalProvider>
       <div className={styles.container}>
@@ -50,9 +61,7 @@ const Header = () => {
           <IoMdSearch fontSize={20} />
         </div>
         <div className={styles.menu}>
-          <Link href="/addAssets">
-            <div className={styles.menuItem}>Add Assets</div>
-          </Link>
+          {message}
           <a onClick={logout}>
             <a href="/" className={styles.menuItem}>
               LogOut

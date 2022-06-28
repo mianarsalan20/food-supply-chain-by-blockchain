@@ -23,6 +23,32 @@ export default function AssetDetails() {
 
     await myDetails.save();
   };
+
+  let message = "";
+  if (user.attributes.username === asset.username) {
+    message = (
+      <button
+        type="button"
+        className="h-14 px-6 py-2 font-semibold rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white"
+      >
+        Owned Asset
+      </button>
+    );
+  } else {
+    message = (
+      <button
+        type="button"
+        className="h-14 px-6 py-2 font-semibold rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white"
+        onClick={() => {
+          handleSubmit();
+          buyAsset(assetPrice, asset);
+        }}
+      >
+        Buy Asset
+      </button>
+    );
+  }
+
   return (
     <div className="py-6">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
@@ -56,16 +82,7 @@ export default function AssetDetails() {
                   onChange={(event) => setQuantity(event.currentTarget.value)}
                 />
               </div>
-              <button
-                type="button"
-                className="h-14 px-6 py-2 font-semibold rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white"
-                onClick={() => {
-                  handleSubmit();
-                  buyAsset(assetPrice, asset);
-                }}
-              >
-                Buy Asset
-              </button>
+              {message}
             </div>
           </div>
         </div>
