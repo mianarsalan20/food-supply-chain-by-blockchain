@@ -8,6 +8,7 @@ function MyApp({ Component, pageProps }) {
     <MoralisProvider
       serverUrl="https://aak9k46wti6v.usemoralis.com:2053/server"
       appId="SXirNpIMaoPkDdMIt9mmycKDFQe52VwNBzkJpd37"
+      useMasterKey="mjxtb8CW4VKs6LSf0dt0dp2c2Ivbz1mLZ4jnhGQI"
     >
       <AmazonProvider>
         <ModalProvider>

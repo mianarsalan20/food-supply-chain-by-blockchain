@@ -6,13 +6,30 @@ import { AmazonContext } from "../context/AmazonContext";
 const Cards = () => {
   const styles = {
     container: `h-full w-full flex flex-col ml-[20px] -mt-[150px]`,
-    selectContainer: `h-full w-half flex flex-col ml-[20px] -mt-[50px]`,
+    // selectMainContainer: `h-full w-full flex`, w-1/2
+    selectContainer: `h-full flex flex-col ml-[20px] -mt-[50px]`,
     title: `text-xl font-bolder mb-[20px] mt-[30px]  ml-[30px]`,
     input: `flex flex-col items-center border-2 mb-8 py-2 px-3 rounded-2xl pl-2 w-full outline-none`,
     cards: `flex items-center  flex-wrap gap-[80px]`,
   };
-  const { assets, sorting, setSorting, filter, setFilter } =
+  const { assets, sorting, setSorting, filter, setFilter, search } =
     useContext(AmazonContext);
+
+  if (sorting === "Recent") {
+    assets = [...assets].reverse();
+  }
+
+  if (sorting === "Low Price") {
+    assets = [...assets].sort(
+      (a, b) => a.attributes.price - b.attributes.price
+    );
+  }
+
+  if (sorting === "High Price") {
+    assets = [...assets].sort(
+      (a, b) => b.attributes.price - a.attributes.price
+    );
+  }
 
   return (
     <div className={styles.container}>
@@ -40,9 +57,6 @@ const Cards = () => {
           <option>Pulses</option>
           <option>Fruit</option>
           <option>Meat</option>
-          <option>Producer</option>
-          <option>Distributer</option>
-          <option>Retailer</option>
         </select>
       </div>
       <div className={styles.title}>New Release</div>
@@ -50,20 +64,55 @@ const Cards = () => {
         <div className={styles.cards}>
           {assets.map((item, i) => {
             let asset = item.attributes;
+            if (
+              asset.name.toLowerCase() === search.toLowerCase() &&
+              search != ""
+            ) {
+              return (
+                <Link
+                  key={i}
+                  href={{
+                    pathname: "/assetDetails",
+                    query: asset, // the data
+                  }}
+                >
+                  <a>
+                    <Card key={item.id} item={item.attributes} />
+                  </a>
+                </Link>
+              );
+            }
 
-            return (
-              <Link
-                key={i}
-                href={{
-                  pathname: "/assetDetails",
-                  query: asset, // the data
-                }}
-              >
-                <a>
-                  <Card key={item.id} item={item.attributes} />
-                </a>
-              </Link>
-            );
+            if (filter === "" || (filter === "Filter By" && search == "")) {
+              return (
+                <Link
+                  key={i}
+                  href={{
+                    pathname: "/assetDetails",
+                    query: asset, // the data
+                  }}
+                >
+                  <a>
+                    <Card key={item.id} item={item.attributes} />
+                  </a>
+                </Link>
+              );
+            }
+            if (asset.category === filter && search == "") {
+              return (
+                <Link
+                  key={i}
+                  href={{
+                    pathname: "/assetDetails",
+                    query: asset, // the data
+                  }}
+                >
+                  <a>
+                    <Card key={item.id} item={item.attributes} />
+                  </a>
+                </Link>
+              );
+            }
           })}
         </div>
       </div>

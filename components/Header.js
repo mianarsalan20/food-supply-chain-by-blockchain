@@ -26,7 +26,7 @@ const Header = () => {
     coins: `ml-[10px]`,
   };
 
-  const { balance, buyTokens, getBalance, logout, user } =
+  const { balance, buyTokens, getBalance, logout, user, setSearch } =
     useContext(AmazonContext);
   const { openModal, isModalOpen, closeModal } = useModal();
 
@@ -57,6 +57,7 @@ const Header = () => {
             type="text"
             placeholder="Search Your Assets..."
             className={styles.searchInput}
+            onChange={(event) => setSearch(event.currentTarget.value)}
           />
           <IoMdSearch fontSize={20} />
         </div>

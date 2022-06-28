@@ -21,6 +21,7 @@ export const AmazonProvider = ({ children }) => {
   const [assetReviews, setAssetReviews] = useState([]);
   const [sorting, setSorting] = useState("");
   const [filter, setFilter] = useState("");
+  const [search, setSearch] = useState("");
 
   const {
     authenticate,
@@ -292,6 +293,8 @@ export const AmazonProvider = ({ children }) => {
         setSorting,
         filter,
         setFilter,
+        search,
+        setSearch,
       }}
     >
       {children}
