@@ -22,6 +22,7 @@ export const AmazonProvider = ({ children }) => {
   const [sorting, setSorting] = useState("");
   const [filter, setFilter] = useState("");
   const [search, setSearch] = useState("");
+  const [index, setIndex] = useState("");
 
   const {
     authenticate,
@@ -46,7 +47,6 @@ export const AmazonProvider = ({ children }) => {
   } = useMoralisQuery("assets");
 
   useEffect(async () => {
-    console.log(assetsData);
     await enableWeb3();
     await getAssets();
     await getOwnedAssets();
@@ -152,7 +152,7 @@ export const AmazonProvider = ({ children }) => {
   const setReviews = async (rating, review) => {
     try {
       if (!isAuthenticated || !currentAccount) return;
-      const res = assetsData[0].add("assetReview", {
+      const res = assetsData[index].add("assetReview", {
         rating: rating,
         review: review,
         reviewer: user.attributes.name,
@@ -172,16 +172,18 @@ export const AmazonProvider = ({ children }) => {
       // let query = new Moralis.Query('_User')
       // let results = await query.find()
 
-      if (assetsData[0]) {
+      if (assetsData[index]) {
         setAssetReviews((prevItems) => [
           ...prevItems,
-          assetsData[0].attributes.assetReview,
+          assetsData[index].attributes.assetReview,
         ]);
       }
     } catch (error) {
       console.log(error);
     }
   };
+
+  console.log(assetReviews);
 
   const buyAsset = async (price, asset) => {
     try {
@@ -295,6 +297,8 @@ export const AmazonProvider = ({ children }) => {
         setFilter,
         search,
         setSearch,
+        index,
+        setIndex,
       }}
     >
       {children}

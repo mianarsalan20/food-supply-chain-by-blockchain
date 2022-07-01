@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Router from "next/router";
 import { useMoralis } from "react-moralis";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import React from "react";
 import { AmazonContext } from "../context/AmazonContext";
 import Home from ".";
@@ -19,6 +19,7 @@ const styles = {
 export default function addAssets() {
   const { user, setUserData, userError } = useMoralis();
   const { Moralis, isAuthenticated, account } = useMoralis();
+  const { assets } = useContext(AmazonContext);
   const [name, setName] = useState();
   const [username, setUsername] = useState();
   const [description, setDescription] = useState();
@@ -59,6 +60,7 @@ export default function addAssets() {
     }
 
     myDetails.set("username", user.attributes.username);
+    myDetails.set("assetIndex", assets.length.toString());
     myDetails.set("assetUserId", user.attributes.ethAddress);
     if (theFile) {
       const data = theFile;

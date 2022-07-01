@@ -70,7 +70,7 @@ export const ReviewInput = () => {
     useMoralis();
   const { setReviews } = useContext(AmazonContext);
 
-  const [comment, setComment] = useState();
+  const [comment, setComment] = useState("");
   const [rating, setRating] = useState(5);
   return (
     <div className={classes.incontainer}>
@@ -79,9 +79,7 @@ export const ReviewInput = () => {
         <textarea
           placeholder="Write Something...."
           rows="2"
-          onChange={(event, newValue) => {
-            setComment(newValue);
-          }}
+          onChange={(event) => setComment(event.currentTarget.value)}
         ></textarea>
         <button
           type="button"

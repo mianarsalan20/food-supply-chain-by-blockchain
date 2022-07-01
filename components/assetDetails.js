@@ -2,17 +2,20 @@ import { useRouter } from "next/router";
 import React, { useContext, useState } from "react";
 import { useMoralis } from "react-moralis";
 import { AmazonContext } from "../context/AmazonContext";
+import { ReviewCard } from "./reviewCard";
+import { ReviewInput } from "./reviewInput";
 
 export default function AssetDetails() {
   const router = useRouter();
   const asset = router.query;
-  const { buyAsset } = useContext(AmazonContext);
+  const { buyAsset, assetReviews, setIndex } = useContext(AmazonContext);
   const { user, setUserData, userError } = useMoralis();
   const { Moralis, isAuthenticated, account } = useMoralis();
   const [quantity, setQuantity] = useState();
   let assetPrice = "";
-  let qty = asset.quantity - quantity;
+  let qty = -(asset.quantity - quantity);
   let qty1 = qty.toString();
+  setIndex(asset.assetIndex);
 
   const handleSubmit = async () => {
     const Asset = Moralis.Object.extend("assets");
@@ -86,6 +89,18 @@ export default function AssetDetails() {
             </div>
           </div>
         </div>
+      </div>
+      <div className="md:flex-1 px-4 mt-[150px]">
+        <br />
+        <div>
+          <div>
+            {assetReviews.slice(0, 2).map((item, index) => {
+              return <ReviewCard key={index} item={item} index={index} />;
+            })}
+          </div>
+        </div>
+        <ReviewInput />
+        <br />
       </div>
     </div>
   );

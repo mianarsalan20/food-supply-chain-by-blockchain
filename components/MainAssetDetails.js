@@ -14,10 +14,6 @@ const MainAssetDetails = () => {
     <div className={styles.container}>
       <Header />
       <AssetDetails />
-      <br />
-      <ReviewCard />
-      <ReviewInput />
-      <br />
     </div>
   );
 };

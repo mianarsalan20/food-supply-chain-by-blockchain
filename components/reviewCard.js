@@ -50,49 +50,53 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export const ReviewCard = () => {
+export const ReviewCard = ({ item }) => {
   const classes = useStyles();
   const { Moralis } = useMoralis();
-  const { assetReviews, assets } = useContext(AmazonContext);
+  const { assetReviews, assets, setAssetReviews } = useContext(AmazonContext);
   const [reviewer, setReviewer] = useState([]);
   const [rating, setRating] = useState([]);
   const [img, setImg] = useState([]);
   const [con, setCon] = useState([]);
+
   const fetchMyReviews = async () => {
-    const objectId = "lIHWWr7j17pconYPAoUzBK6k"; //input your value here
+    const objectId = "6Vox0Wt2w2zqL8PSLNFQW36B"; //input your value here
     const query = new Moralis.Query("assets");
 
     query.equalTo("objectId", objectId);
     const queryResult = await query.first({ useMasterKey: true });
     const assetReview = queryResult.get("assetReview");
-    console.log("hello");
     setReviewer(assetReview[0].reviewer);
     setRating(assetReview[0].rating);
     setImg(assetReview[0].reviewerImg);
     setCon(assetReview[0].reviewerContent);
+    //console.log("start");
+    //console.log(assetReviews);
+    //console.log("end");
   };
-  console.log(fetchMyReviews());
-  console.log(reviewer);
-  return (
-    <div className={classes.container}>
-      <div className={classes.rightSide}>
-        {assetReviews.map((d) => {
-          return (
-            <div key={d.id}>
-              <div className={classes.title}>
-                <img src={img} />
 
-                <div>{reviewer} </div>
-                <div>1 months</div>
-              </div>
-              <div className={classes.content}>
-                <Rating name="read-only" rating={4} readOnly />
-                <div>nice quality</div>
+  return (
+    <>
+      {item.map((asset, index) => {
+        return (
+          <div className={classes.container} key={index}>
+            <div className={classes.rightSide}>
+              <div>
+                <div className={classes.title}>
+                  <img src={asset.reviewerImg} />
+
+                  <div>{asset.reviewer} </div>
+                  <div>1 months</div>
+                </div>
+                <div className={classes.content}>
+                  <Rating name="read-only" rating={asset.rating} readOnly />
+                  <div>{asset.review}</div>
+                </div>
               </div>
             </div>
-          );
-        })}
-      </div>
-    </div>
+          </div>
+        );
+      })}
+    </>
   );
 };

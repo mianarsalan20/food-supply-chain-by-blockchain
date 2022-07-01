@@ -29,7 +29,7 @@ const Transaction = ({ item }) => {
               <div className="flex w-full gap-[80px]">
                 <div className={styles.topHeaderText}>
                   ORDER PLACED <br />
-                  {moment(asset.updatedAt).format("MMMM Do YYYY")}
+                  {moment(asset.updatedAt).format("MMMM DD")}
                 </div>
                 <div className={styles.topHeaderText}>
                   TOTAL <br />
@@ -43,7 +43,7 @@ const Transaction = ({ item }) => {
             </div>
             <div className={styles.content}>
               <div className={styles.date}>
-                Bought on {moment(asset.updatedAt).format("MMMM Do")}
+                Bought on {moment(asset.updatedAt).format("MMMM DD")}
               </div>
               <div className={styles.item}>
                 <img

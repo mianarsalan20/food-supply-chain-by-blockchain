@@ -1,5 +1,7 @@
 import ReviewCard from "./reviewCard";
 import ReviewInput from "./reviewInput";
+import React, { useContext, useState } from "react";
+import { AmazonContext } from "../context/AmazonContext";
 import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
@@ -20,10 +22,20 @@ const useStyles = makeStyles((theme) => ({
 }));
 const ReviewAndRating = () => {
   const classes = useStyles();
+  const { assetReviews } = useContext(AmazonContext);
+  console.log(assetReviews);
   return (
     <div className={classes.container}>
       <div>
-        <ReviewCard />
+        <div>
+          {assetReviews ? <div>Comments</div> : <div>No Comments</div>}
+          <div>
+            {assetReviews.map((item, index) => {
+              console.log(assetReviews);
+              return <ReviewCard key={index} item={item} index={index} />;
+            })}
+          </div>
+        </div>
         <ReviewInput />
       </div>
     </div>
