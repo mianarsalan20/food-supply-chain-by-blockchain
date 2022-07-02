@@ -1,4 +1,3 @@
-import MainProfile from "../components/MainProfile";
 import Sidebar from "../components/Sidebar";
 import SignIn from "../components/signin";
 import { useMoralis } from "react-moralis";
