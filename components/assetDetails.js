@@ -8,7 +8,8 @@ import { ReviewInput } from "./reviewInput";
 export default function AssetDetails() {
   const router = useRouter();
   const asset = router.query;
-  const { buyAsset, assetReviews, setIndex } = useContext(AmazonContext);
+  const { buyAsset, assetReviews, setIndex, assets } =
+    useContext(AmazonContext);
   const { user, setUserData, userError } = useMoralis();
   const { Moralis, isAuthenticated, account } = useMoralis();
   const [quantity, setQuantity] = useState();
@@ -31,6 +32,30 @@ export default function AssetDetails() {
 
     await myDetails.save();
   };
+  const handleSubmit1 = async () => {
+    const User = Moralis.Object.extend("_User");
+
+    const Asset = Moralis.Object.extend("assets");
+    const myDetails = new Asset();
+
+    myDetails.set("name", asset.name);
+
+    myDetails.set("description", asset.description);
+
+    myDetails.set("price", asset.price);
+
+    myDetails.set("category", asset.category);
+
+    myDetails.set("quantity", qty1);
+
+    myDetails.set("username", user.attributes.username);
+    myDetails.set("assetIndex", assets.length.toString());
+    myDetails.set("assetUserId", user.attributes.ethAddress);
+
+    myDetails.set("image", asset.image);
+
+    await myDetails.save();
+  };
 
   let message = "";
   if (user.attributes.username === asset.username) {
@@ -49,7 +74,9 @@ export default function AssetDetails() {
         className="h-14 px-6 py-2 font-semibold rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white"
         onClick={() => {
           handleSubmit();
-          buyAsset(assetPrice, asset);
+          buyAsset(assetPrice, asset).then(() => {
+            handleSubmit1();
+          });
         }}
       >
         Buy Asset

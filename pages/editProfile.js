@@ -74,7 +74,7 @@ export default function EditProfile() {
       {isAuthenticated ? (
         <div className={styles.card}>
           <div className={styles.form}>
-            <h1 className={styles.title}>Edit Profile</h1>
+            <h1 className={styles.title}>Add Profile</h1>
             <div>
               <input
                 className={styles.input}
