@@ -34,33 +34,7 @@ const Messages = () => {
       <div className="h-full px-10 py-4">
         <>
           {messages.map((messages) => {
-            let messageCheck = "";
-
             if (user.id === messages.attributes.userId) {
-              return (
-                <div className="w-full flex flex-start overflow-y-auto">
-                  <div className="w-1/2">
-                    <div className="flex items-center">
-                      <img
-                        className="h-5 w-5 overflow-hidden rounded-full"
-                        src={messages.attributes.profile}
-                        alt=""
-                      />
-                      <p className="font-semibold ml-3 text-sm text-slate-600">
-                        {messages.attributes.name}{" "}
-                        <span className="text-slate-400 text-xs">3:21 PM</span>
-                      </p>
-                    </div>
-
-                    <div className="mt-3 w-full bg-slate-50 p-4 rounded-b-xl rounded-tr-xl">
-                      <p className=" text-sm text-slate-500">
-                        {messages.attributes.message}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              );
-            } else {
               return (
                 <div className="w-full flex justify-end mt-3">
                   <div className="w-1/2 ">
@@ -79,6 +53,30 @@ const Messages = () => {
 
                     <div className="mt-3 w-full bg-blue-500 p-4 rounded-b-xl rounded-tl-xl">
                       <p className=" text-sm text-white">
+                        {messages.attributes.message}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              );
+            } else {
+              return (
+                <div className="w-full flex flex-start overflow-y-auto">
+                  <div className="w-1/2">
+                    <div className="flex items-center">
+                      <img
+                        className="h-5 w-5 overflow-hidden rounded-full"
+                        src={messages.attributes.profile}
+                        alt=""
+                      />
+                      <p className="font-semibold ml-3 text-sm text-slate-600">
+                        {messages.attributes.name}{" "}
+                        <span className="text-slate-400 text-xs">3:21 PM</span>
+                      </p>
+                    </div>
+
+                    <div className="mt-3 w-full bg-slate-50 p-4 rounded-b-xl rounded-tr-xl">
+                      <p className=" text-sm text-slate-500">
                         {messages.attributes.message}
                       </p>
                     </div>
