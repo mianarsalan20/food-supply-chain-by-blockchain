@@ -1,7 +1,7 @@
 import Sidebar from "../components/Sidebar";
 import SignIn from "../components/signin";
 import { useMoralis } from "react-moralis";
-import Messages from "../components/messages";
+import Messages from "../components/Messages";
 import Header from "../components/Header";
 
 const styles = {
