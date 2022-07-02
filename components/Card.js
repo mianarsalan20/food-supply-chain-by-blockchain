@@ -24,7 +24,7 @@ const Card = ({ item }) => {
       <div>
         <div className={styles.cardTitle}>{item.name}</div>
         <div className={styles.price}>
-          {item.quantity} Kg -{item.price} Rs{" "}
+          {item.quantity} {"Kg - "} {item.price} Rs{" "}
           <FaCoins className={styles.coins} />
         </div>
       </div>

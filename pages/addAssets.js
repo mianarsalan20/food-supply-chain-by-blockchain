@@ -69,7 +69,9 @@ export default function addAssets() {
       myDetails.set("image", file.ipfs());
     }
 
-    await myDetails.save();
+    await myDetails.save().then(() => {
+      alert("You've successfully Add Asset");
+    });
     Router.push("/start");
   };
 

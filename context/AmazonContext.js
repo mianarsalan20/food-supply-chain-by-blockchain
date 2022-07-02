@@ -325,6 +325,7 @@ export const AmazonProvider = ({ children }) => {
         index,
         setIndex,
         messages,
+        getMessages,
       }}
     >
       {children}

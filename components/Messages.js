@@ -2,6 +2,7 @@ import { useMoralis } from "react-moralis";
 import React, { useState, useContext } from "react";
 import { AmazonContext } from "../context/AmazonContext";
 import { MdSend } from "react-icons/md";
+import moment from "moment";
 
 const Messages = () => {
   const styles = {
@@ -13,7 +14,7 @@ const Messages = () => {
   const { user, setUserData, userError } = useMoralis();
   const { Moralis, isAuthenticated, account } = useMoralis();
   const { assets, messages } = useContext(AmazonContext);
-  const [message, setmessage] = useState();
+  const [message, setmessage, getMessages] = useState();
   console.log(messages);
   const handleSubmit = async () => {
     const Message = Moralis.Object.extend("messages");
@@ -26,7 +27,9 @@ const Messages = () => {
     myDetails.set("userId", user.id);
     myDetails.set("profile", user.attributes.profileImg);
 
-    await myDetails.save();
+    await myDetails.save().then(() => {
+      window.location.reload();
+    });
   };
 
   return (
@@ -41,7 +44,10 @@ const Messages = () => {
                     <div className="flex items-center justify-end">
                       <p className="font-semibold mr-3 text-sm text-slate-600">
                         {messages.attributes.name}{" "}
-                        <span className="text-slate-400 text-xs">3:25 PM</span>
+                        <span className="text-slate-400 text-xs">
+                          {" "}
+                          {moment(messages.updatedAt).format("MMMM DD")}
+                        </span>
                       </p>
 
                       <img
@@ -71,7 +77,10 @@ const Messages = () => {
                       />
                       <p className="font-semibold ml-3 text-sm text-slate-600">
                         {messages.attributes.name}{" "}
-                        <span className="text-slate-400 text-xs">3:21 PM</span>
+                        <span className="text-slate-400 text-xs">
+                          {" "}
+                          {moment(messages.updatedAt).format("MMMM DD")}
+                        </span>
                       </p>
                     </div>
 

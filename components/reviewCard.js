@@ -89,7 +89,7 @@ export const ReviewCard = ({ item }) => {
                   <div>1 months</div>
                 </div>
                 <div className={classes.content}>
-                  <Rating name="read-only" rating={asset.rating} readOnly />
+                  <Rating name="read-only" value={asset.rating} readOnly />
                   <div>{asset.review}</div>
                 </div>
               </div>
