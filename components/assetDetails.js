@@ -13,9 +13,14 @@ export default function AssetDetails() {
   const { Moralis, isAuthenticated, account } = useMoralis();
   const [quantity, setQuantity] = useState();
   let assetPrice = "";
-  let qty = -(asset.quantity - quantity);
-  let qty1 = qty.toString();
+  let qty = quantity - asset.quantity;
+  let qty1 = (-qty).toString();
   setIndex(asset.assetIndex);
+
+  /*let quantityUpdate = [
+    { filter: { objectId: asset.objectId }, update: { quantity: qty1 } },
+  ];
+  Moralis.bulkUpdate("asset", quantityUpdate);*/
 
   const handleSubmit = async () => {
     const Asset = Moralis.Object.extend("assets");

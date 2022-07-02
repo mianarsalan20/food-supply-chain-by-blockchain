@@ -16,6 +16,7 @@ export const AmazonProvider = ({ children }) => {
   const [nickname, setNickname] = useState("");
   const [username, setUsername] = useState("");
   const [assets, setAssets] = useState([]);
+  const [messages, setMessages] = useState([]);
   const [recentTransactions, setRecentTransactions] = useState([]);
   const [ownedItems, setOwnedItems] = useState([]);
   const [assetReviews, setAssetReviews] = useState([]);
@@ -45,13 +46,26 @@ export const AmazonProvider = ({ children }) => {
     error: assetsDataError,
     isLoading: assetsDataIsLoading,
   } = useMoralisQuery("assets");
+  const {
+    data: messagesData,
+    error: messagesDataError,
+    isLoading: messagesDataIsLoading,
+  } = useMoralisQuery("messages");
 
   useEffect(async () => {
     await enableWeb3();
     await getAssets();
     await getOwnedAssets();
     await getReviews();
-  }, [userData, assetsData, assetsDataIsLoading, userDataIsLoading]);
+    await getMessages();
+  }, [
+    userData,
+    assetsData,
+    messagesData,
+    assetsDataIsLoading,
+    messagesDataIsLoading,
+    userDataIsLoading,
+  ]);
 
   useEffect(async () => {
     if (!isWeb3Enabled) {
@@ -233,6 +247,17 @@ export const AmazonProvider = ({ children }) => {
       console.log(error);
     }
   };
+  const getMessages = async () => {
+    try {
+      await enableWeb3();
+      // const query = new Moralis.Query('Assets')
+      // const results = await query.find()
+
+      setMessages(messagesData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const listenToUpdates = async () => {
     let query = new Moralis.Query("EthTransactions");
@@ -299,6 +324,7 @@ export const AmazonProvider = ({ children }) => {
         setSearch,
         index,
         setIndex,
+        messages,
       }}
     >
       {children}
